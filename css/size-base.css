@@ -1,0 +1,33 @@
+:root {
+  --layout-width-min: 375; /* SPのデザインカンプの横幅 */
+  --layout-width-max: 1280; /* PCのデザインカンプの横幅 */
+  --base-font-size: 16; /* デフォルトのフォントサイズ */
+
+  /* カスタムプロパティに計算式を格納すればそれ以降の指定が簡潔になる */
+  --fluid-ratio-min: calc(1 / var(--layout-width-min) * 100dvi);
+  --fluid-ratio-max: calc(1 / var(--layout-width-max) * 100dvi);
+  --rem: calc(1rem / var(--base-font-size));
+}
+
+.container {
+  /* デザインカンプの幅が375pxで、要素の内側の余白が32px */
+  padding-inline: calc(32 * var(--fluid-ratio-min));
+}
+
+.container {
+  /* デザインカンプの幅が1280pxで、要素の内側の余白が40px */
+  padding-inline: calc(40 * var(--fluid-ratio-max));
+}
+
+h1 {
+  /* 24pxをremに変換 */
+  font-size: calc(24 * var(--rem));
+}
+
+/* clampを入力すると計算式が生成される ※スニペットに登録 */
+body {
+  --_clamp-min: 16;
+  --_clamp-max: 24;
+  --_clamp: clamp(var(--_clamp-min) * var(--rem), (var(--_clamp-min) - (var(--_clamp-max) - var(--_clamp-min)) / (var(--layout-width-max) - var(--layout-width-min)) * var(--layout-width-min)) * var(--rem) + (var(--_clamp-max) - var(--_clamp-min)) / (var(--layout-width-max) - var(--layout-width-min)) * 100dvi, var(--_clamp-max) * var(--rem));
+  font-size: var(--_clamp);
+}
