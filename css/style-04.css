@@ -1,0 +1,65 @@
+:root {
+  --color-light: #f7f8f8;
+  --color-dark: #434a56;
+
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  font-family: "Open Sans", sans-serif;
+}
+
+section:not([class]) {
+  display: block grid;
+  row-gap: 1rlh;
+  align-content: center;
+  min-block-size: 100svb;
+  max-inline-size: 60rem;
+  margin-inline: auto;
+  padding-block: 64px;
+  padding-inline: max(5svi, 20px);
+}
+
+h2 {
+  font-size: clamp(1rem, 0.636rem + 1.82svi, 2rem);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.horizontal {
+  --_scroll-amount: 500;
+
+  overflow: clip;
+  min-block-size: calc(var(--_scroll-amount) * 1dvb);
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  view-timeline-name: --horizontal-section;
+}
+
+.container {
+  position: sticky;
+  inset-block-start: 0;
+  inline-size: calc(var(--_scroll-amount) / 2 * 1dvmax);
+  min-block-size: 100dvb;
+  align-content: center;
+  animation: linear horizontal-scroll both;
+  animation-timeline: --horizontal-section;
+  animation-range: contain 0% contain 100%;
+}
+
+@keyframes horizontal-scroll {
+  to {
+    translate: calc(-100% + 100dvi);
+  }
+}
+
+.slider {
+  --_gutter: max(2.5dvi, 24px);
+
+  display: block grid;
+  grid-auto-flow: column;
+  column-gap: var(--_gutter);
+  padding: var(--_gutter);
+}
+
+img {
+  inline-size: 100%;
+}
