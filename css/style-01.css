@@ -1,0 +1,80 @@
+@property --font-size-base {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 16px;
+}
+
+:root {
+  --rem: calc(tan(atan2(1px, var(--font-size-base))) * 1rem);
+}
+
+body {
+  align-content: center;
+  padding: 20px;
+
+  & > * {
+    inline-size: min(400 * var(--rem), 100%);
+    margin-inline: auto;
+  }
+
+  & > * + * {
+    margin-block-start: 40px;
+  }
+}
+
+.button {
+  --_foreground-default: #fff;
+  --_foreground-hoverable: #fff;
+  --_background-default: #333;
+  --_background-hoverable: oklch(from var(--_background-default) calc(l + 0.2) c h);
+  --_icon-translate-hoverable: 4px;
+  --_duration: 0.3s;
+
+  display: inline grid;
+  grid-template-columns: 1fr auto 1fr;
+  column-gap: calc(8 * var(--rem));
+  align-items: center;
+  inline-size: 100%;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: var(--_background-default);
+  color: var(--_foreground-default);
+  vertical-align: middle;
+  text-wrap: pretty;
+  transition-duration: var(--_duration);
+  transition-property: background-color, color;
+
+  &::before {
+    content: "";
+  }
+
+  &::after {
+    content: "";
+    justify-self: end;
+    mask: var(--icon-chevron-right) no-repeat center / contain;
+    inline-size: 1em;
+    aspect-ratio: 1;
+    background: conic-gradient(currentcolor 0 0), CanvasText;
+    transition: translate var(--_duration);
+  }
+
+  &:focus-visible {
+    background-color: var(--_background-hoverable);
+    color: var(--_foreground-hoverable);
+
+    &::after {
+      translate: var(--_icon-translate-hoverable);
+    }
+  }
+
+  &:where(:any-link, :enabled):hover {
+    @media (any-hover: hover) {
+      background-color: var(--_background-hoverable);
+      color: var(--_foreground-hoverable);
+
+      &::after {
+        translate: var(--_icon-translate-hoverable);
+      }
+    }
+  }
+}
