@@ -1,0 +1,112 @@
+.card-wrapper {
+  --_column-min-size: calc(320 * 1rem / 16);
+  --_background: color-mix(in sRGB, var(--color-accent), transparent 80%);
+  --_duration: 0.3s;
+
+  position: relative;
+  display: block grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--_column-min-size), 100%), 1fr));
+  max-inline-size: 1024px;
+  margin-inline: auto;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: anchor(--card start);
+    z-index: -1;
+    inline-size: anchor-size(--card inline);
+    block-size: anchor-size(--card block);
+    border-radius: 4px;
+    background-color: var(--_background);
+    transition-duration: var(--_duration);
+    transition-property: inset, inline-size, block-size;
+  }
+}
+
+.card {
+  --_gutter: 1rem;
+  --_font-size: clamp(0.75rem, 0.705rem + 0.23vi, 0.875rem);
+  --_duration: 0.3s;
+  --_has-active-true: ;
+  --_has-active-false: initial;
+
+  position: relative;
+  display: block grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+  row-gap: var(--_gutter);
+  padding: var(--_gutter);
+  font-size: var(--_font-size);
+
+  @supports not (anchor-name: --a) {
+    background-color: var(--_has-active-true, var(--_background));
+    transition: background-color var(--_duration);
+  }
+
+  &:where(:hover, :has(:focus-visible)) {
+    anchor-name: --card;
+  }
+
+  &:has(:any-link:hover) {
+    @media (any-hover: hover) {
+      --_has-active-true: initial;
+      --_has-active-false: ;
+    }
+  }
+
+  &:has(:focus-visible) {
+    --_has-active-true: initial;
+    --_has-active-false: ;
+  }
+}
+
+.title {
+  font-size: 1em;
+
+  & :any-link {
+    display: -webkit-box;
+    overflow: clip;
+    text-overflow: ellipsis;
+    block-size: 100%;
+    color: var(--_has-active-true, var(--color-accent));
+    transition: color var(--_duration);
+    -webkit-box-orient: block-axis;
+    -webkit-line-clamp: 3;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+  }
+}
+
+.thumbnail {
+  contain: strict;
+  order: -1;
+  aspect-ratio: 16 / 9;
+
+  & img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    scale: var(--_has-active-true, 1.2);
+    transition: scale var(--_duration);
+  }
+}
+
+:root {
+  --color-white: #fcfcfc;
+  --color-smoke: #dadada;
+  --color-black: #353535;
+  --color-accent: #1ca4b4;
+
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+body {
+  align-content: center;
+  padding: 20px;
+}
