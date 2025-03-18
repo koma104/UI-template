@@ -10,7 +10,7 @@
   margin-inline: auto;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     inset: anchor(--card start);
     z-index: -1;
@@ -74,7 +74,7 @@
     -webkit-line-clamp: 3;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       z-index: 1;
